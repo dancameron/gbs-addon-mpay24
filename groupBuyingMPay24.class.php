@@ -343,24 +343,34 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	}
 
 	public function display_api_username_field() {
-		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.$this->user.'" size="10" />';
+		echo '<input type="text" name="'.self::API_USERNAME_OPTION.'" value="'.self::$user.'" size="10" />';
 	}
 
 	public function display_api_password_field() {
-		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.$this->password.'" size="10" />';
+		echo '<input type="text" name="'.self::API_PASSWORD_OPTION.'" value="'.self::$password.'" size="10" />';
 	}
 
 	public function display_lang_field() {
-		echo '<input type="text" name="'.self::API_LANG_OPTION.'" value="'.$this->lang.'" size="3" />';
+		echo '<select name="'.self::API_LANG_OPTION.'">
+			<option value="BG" '.selected( self::$lang, 'BG', FALSE ).'>Bulgarian</option>
+			<option value="CS" '.selected( self::$lang, 'CS', FALSE ).'>Czech</option>
+			<option value="DE" '.selected( self::$lang, 'DE', FALSE ).'>German</option>
+			<option value="EN" '.selected( self::$lang, 'EN', FALSE ).'>English</option>
+			<option value="ES" '.selected( self::$lang, 'ES', FALSE ).'>Spanish</option>
+			<option value="FR" '.selected( self::$lang, 'FR', FALSE ).'>French</option>
+			<option value="HU" '.selected( self::$lang, 'HU', FALSE ).'>Hungarian</option>
+			<option value="NL" '.selected( self::$lang, 'NL', FALSE ).'>Dutch</option>
+
+		</select>';
 	}
 
 	public function display_api_mode_field() {
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, $this->api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
-		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, $this->api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
+		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_LIVE.'" '.checked( self::MODE_LIVE, self::$api_mode, FALSE ).'/> '.self::__( 'Live' ).'</label><br />';
+		echo '<label><input type="radio" name="'.self::API_MODE_OPTION.'" value="'.self::MODE_TEST.'" '.checked( self::MODE_TEST, self::$api_mode, FALSE ).'/> '.self::__( 'Sandbox' ).'</label>';
 	}
 
 	public function display_cancel_field() {
-		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.$this->cancel_url.'" size="80" />';
+		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.self::$cancel_url.'" size="80" />';
 	}
 
 	public function display_exp_meta_box() {
