@@ -376,7 +376,8 @@
                 $shipping = $order->getElementsByTagName("Shipping")->item(0);
                 $shippingConfirmed = $shipping->getAttribute("confirmed");
             }
-
+            error_log( 'secret ' . print_r( $this->getSecret($tid), TRUE ) );
+            error_log( 'args' . print_r( $args, TRUE ) );
             if($this->getSecret($tid) == $args['token']) {
                 if($shippingConfirmed == "false") {
                     $newArgs["SHIPP_NAME"] = $order->getElementsByTagName("Shipping")->item(0)->getElementsByTagName("Name")->item(0)->nodeValue;

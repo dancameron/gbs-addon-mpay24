@@ -3,7 +3,24 @@
   <xs:complexType name="AddressType">
     <xs:sequence>
       <xs:choice>
-        <xs:element name="Name" type="AddressFieldType"/>
+        <xs:element name="Name">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="AddressFieldType">
+                <xs:attribute name="Gender">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:length value="1"/>
+                      <xs:enumeration value="M"/>
+                      <xs:enumeration value="F"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="Birthday" type="xs:date"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
         <xs:sequence>
           <xs:annotation>
             <xs:documentation>Obsolete: use Name</xs:documentation>
@@ -25,7 +42,13 @@
         </xs:sequence>
       </xs:choice>
       <xs:sequence minOccurs="0">
-        <xs:element name="Street" type="AddressFieldType"/>
+        <xs:element name="Street">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="AddressFieldType"/>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="Street2" type="AddressFieldType" minOccurs="0"/>
         <xs:element name="Zip" type="AddressFieldType"/>
         <xs:element name="City" type="AddressFieldType"/>
@@ -59,6 +82,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="Phone" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="20"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="Mode" use="required">
       <xs:simpleType>
@@ -88,11 +118,19 @@
   <xs:element name="Order">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="ClientIP" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="40"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
         <xs:element name="UserField" type="xs:string" minOccurs="0"/>
         <xs:element name="Tid">
           <xs:simpleType>
             <xs:restriction base="xs:string">
               <xs:maxLength value="32"/>
+              <xs:minLength value="1"/>
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
@@ -142,9 +180,11 @@
                         <xs:enumeration value="GIROPAY"/>
                         <xs:enumeration value="PAYPAL"/>
                         <xs:enumeration value="MPASS"/>
+                        <xs:enumeration value="BILLPAY"/>
                         <xs:enumeration value="INVOICE"/>
                         <xs:enumeration value="HP"/>
                         <xs:enumeration value="SAFETYPAY"/>
+                        <xs:enumeration value="KLARNA"/>
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:attribute>
@@ -167,11 +207,13 @@
                         <xs:enumeration value="ONE"/>
                         <xs:enumeration value="T-MOBILE"/>
                         <xs:enumeration value="ORANGE"/>
+                        <xs:enumeration value="EPS"/>
                         <xs:enumeration value="ATOS"/>
                         <xs:enumeration value="HOBEX-AT"/>
                         <xs:enumeration value="HOBEX-DE"/>
                         <xs:enumeration value="HOBEX-NL"/>
-                        <xs:enumeration value="BILLPAY"/>
+                        <xs:enumeration value="INVOICE"/>
+                        <xs:enumeration value="HP"/>
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:attribute>

@@ -1,6 +1,7 @@
 <?php
-
+//http://prime.gbmu.dev/checkout/?TID=3014&LANGUAGE=DE&USER_FIELD=&BRAND=VISA
 require_once 'lib/GB_MPay24_Shop.class.php';
+
 
 class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
@@ -14,13 +15,13 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	const CANCEL_URL_OPTION = 'gb_paypal_cancel_url';
 	const RETURN_URL_OPTION = 'gb_paypal_return_url';
 	protected static $instance;
-	private $api_mode = self::MODE_TEST;
-	private $user = '';
-	private $password = '';
-	private $lang = '';
-	private $cancel_url = '';
-	private $return_url = '';
-	private $alt_payment_value = '';
+	private static $api_mode = self::MODE_TEST;
+	private static $user = '';
+	private static $password = '';
+	private static $lang = '';
+	private static $cancel_url = '';
+	private static $return_url = '';
+	private static $alt_payment_value = '';
 
 	public static function get_instance() {
 		if ( !( isset( self::$instance ) && is_a( self::$instance, __CLASS__ ) ) ) {
@@ -35,13 +36,13 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 	protected function __construct() {
 		parent::__construct();
-		$this->user = get_option( self::API_USERNAME_OPTION, '' );
-		$this->password = get_option( self::API_PASSWORD_OPTION, '' );
-		$this->lang = get_option( self::API_LANG_OPTION, 'DE' );
-		$this->api_mode = get_option( self::API_MODE_OPTION, self::MODE_TEST );
-		$this->alt_payment_value = self::__( 'Pay with MPay24' );
-		$this->cancel_url = get_option( self::CANCEL_URL_OPTION, Group_Buying_Carts::get_url() );
-		$this->return_url = Group_Buying_Checkouts::get_url();
+		self::$user = get_option( self::API_USERNAME_OPTION, '' );
+		self::$password = get_option( self::API_PASSWORD_OPTION, '' );
+		self::$lang = get_option( self::API_LANG_OPTION, 'DE' );
+		self::$api_mode = get_option( self::API_MODE_OPTION, self::MODE_TEST );
+		self::$alt_payment_value = self::__( 'Pay with mPAY24' );
+		self::$cancel_url = get_option( self::CANCEL_URL_OPTION, Group_Buying_Carts::get_url() );
+		self::$return_url = Group_Buying_Checkouts::get_url();
 
 		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
 
@@ -51,6 +52,9 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		// Remove pages
 		add_filter( 'gb_checkout_pages', array( $this, 'remove_checkout_pages' ) );
 
+		add_action( 'purchase_completed', array( $this, 'capture_purchase' ), 10, 1 );
+		add_action( self::CRON_HOOK, array( $this, 'capture_pending_payments' ) );
+
 		// Handle the return of user from mpay24
 		add_action( 'gb_load_cart', array( $this, 'back_from_mpay24' ), 10, 0 );
 
@@ -58,10 +62,17 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		add_filter( 'group_buying_template_meta_boxes/deal-expiration.php', array( $this, 'display_exp_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-price.php', array( $this, 'display_price_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-limits.php', array( $this, 'display_limits_meta_box' ), 10 );
+
+		$purchase = Group_Buying_Purchase::get_instance(3013);
+		Group_Buying_MPay24::capture_purchase($purchase);
 	}
 
 	public static function register() {
-		self::add_payment_processor( __CLASS__, self::__( 'MPay24' ) );
+		self::add_payment_processor( __CLASS__, self::__( 'mPAY24' ) );
+	}
+
+	public static function checkout_icon() {
+		return '<img src="https://www.mpay24.com/web/img/logos/payment-mpay24.png" title="Paypal Payments" id="paypal_icon"/>';
 	}
 
 	/**
@@ -75,12 +86,17 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		return $pages;
 	}
 
-	private function is_test_mode() {
-		return $this->api_mode == self::MODE_TEST;
+	private static function is_test_mode() {
+		return self::$api_mode == self::MODE_TEST;
 	}
 
 	public static function returned_from_offsite() {
 		return isset( $_GET['s'] ) && !isset( $_REQUEST['gb_checkout_action'] );
+	}
+
+	public static function init_shop() {
+		$shop = new GB_MPAY24_Shop( self::$user, self::$password, self::is_test_mode() );
+		return $shop;
 	}
 
 	/**
@@ -151,7 +167,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	 */
 	public function send_offsite( Group_Buying_Checkouts $checkout, Group_Buying_Payment $payment, Group_Buying_Purchase $purchase ) {
 
-		$shop = new GB_MPAY24_Shop( $this->user, $this->password, $this->is_test_mode() );
+		$shop = self::init_shop();
 		$shop->setTid( $payment->get_id() );
 		$shop->setPrice( gb_get_number_format( $purchase->get_total( $this->get_payment_method() ) ) );
 		$shop->setLanguage( $this->lang );
@@ -166,10 +182,11 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 		$result = $shop->pay();
 
+		error_log( 'result' . print_r( $result, TRUE ) );
+
 		if ( $result->getGeneralResponse()->getStatus() != "OK" ) {
 			error_log( "Error: " . $result->getExternalStatus() );
 			error_log( "Return Code: " . $result->getGeneralResponse()->getReturnCode() );
-			error_log( 'result' . print_r( $result, TRUE ) );
 			self::set_message( $result->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
 			return FALSE;
 		}
@@ -183,7 +200,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		if ( isset( $_GET['TID'] ) && !isset( $_REQUEST['gb_checkout_action'] ) ) {
 			// Process the order
 			if ( $this->validate_purchase( $_GET ) ) {
-				self::set_message( 'Payment "Pending": please wait for authorization to complete and vouchers to be activated.', self::MESSAGE_STATUS_INFO );
+				// self::set_message( 'Payment "Pending": please wait for authorization to complete and vouchers to be activated.', self::MESSAGE_STATUS_INFO );
 				wp_redirect( add_query_arg( array( 'gb_checkout_action' => 'confirmation' ), Group_Buying_Checkouts::get_url() ) );
 				exit();
 			} else {
@@ -197,101 +214,88 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 	public static function validate_purchase( $get ) {
 
-		do_action( 'payment_handle_ipn', $get );
-
 		foreach ( $get as $key => $value ) {
 			if ( $key !== 'TID' )
 				$args[$key] = $value;
 		}
 
 		if ( self::DEBUG ) {
-			error_log( '---------- Eaasy Pay IPN Handler ----------' );
+			error_log( '---------- mPay24 IPN Handler ----------' );
 			error_log( "message: " . print_r( wp_parse_args( $get ), true ) );
 		}
 
-		$shop = new GB_MPAY24_Shop( $this->user, $this->password, $this->is_test_mode() );
+		$shop = self::init_shop();
 		$confirm = $shop->confirm( $get['TID'], $args );
 		error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
 
 		return true;
 	}
 
-	public function check_mpay24_response() {
-		@ob_clean();
-		if ( ! empty( $_GET ) && self::validate_ipn() ) {
-			header( 'HTTP/1.1 200 OK' );
-			self::successful_request( $_GET );
-		} else {
-			wp_die( "mPAY24 IPN Request Failure" );
+	/**
+	 * Capture a pre-authorized payment
+	 *
+	 * @param Group_Buying_Purchase $purchase
+	 * @return void
+	 */
+	public function capture_purchase( Group_Buying_Purchase $purchase ) {
+		$payments = Group_Buying_Payment::get_payments_for_purchase( $purchase->get_id() );
+		foreach ( $payments as $payment_id ) {
+			$payment = Group_Buying_Payment::get_instance( $payment_id );
+			$this->maybe_capture_payment( $payment );
 		}
-	}
-
-	function validate_ipn() {
-		$get_params = $_GET;
-		$args      = array();
-
-		foreach ( $get_params as $key => $value ) {
-			if ( 'TID' !== $key ) {
-				$args[ $key ] = $value;
-			}
-		}
-
-		$shop = new GB_MPAY24_Shop( $this->user, $this->password, $this->is_test_mode() );
-		if ( isset( $this->log ) ) {
-			$shop->setLog( $this->log );
-		}
-		$shop->confirm( $_GET['TID'], $args );
-
-		return true;
 	}
 
 	/**
+	 * Try to capture all pending payments
 	 *
-	 *
-	 * @param array   $posted - request parameters
-	 * @access public
 	 * @return void
 	 */
-	public static function successful_request( $posted ) {
+	public function capture_pending_payments() {
+		$payments = Group_Buying_Payment::get_pending_payments();
+		foreach ( $payments as $payment_id ) {
+			$payment = Group_Buying_Payment::get_instance( $payment_id );
+			$this->maybe_capture_payment( $payment );
+		}
+	}
 
-		if ( ! empty( $posted['TID'] ) ) {
-			$transaction_id = $posted['TID'];
-			$payment = Group_Buying_Payment::get_instance( $transaction_id );
-			$data = $payment->get_data();
-			$transaction_data = $data['transaction_data'];
-
-			//mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
-			// Lowercase
-			$tstatus = strtolower( $transaction_data['tstatus'] );
-
-			// We are here so lets check status and do actions
-			switch ( $tstatus ) {
-			case 'billed':
-				// Check order not already completed
-				if ( Group_Buying_Payment::STATUS_COMPLETE == $payment->get_status() ) {
-					if ( 'yes' == $this->debug ) {
-						$this->log->add( 'mpay24', 'Aborting, Order #' . $order->id . ' is already complete.' );
-					}
-					exit;
-				}
-
+	public function maybe_capture_payment( Group_Buying_Payment $payment ) {
+		if ( $payment->get_payment_method() == $this->get_payment_method() && $payment->get_status() != Group_Buying_Payment::STATUS_COMPLETE ) {
+			$status = $this->get_transaction_status( $payment );
+			error_log( 'status ' . print_r( $status, TRUE ) );
+			// mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
+			switch ( $status ) {
+			case 'BILLED':
 				// Payment completed
-				self::mark_payment_and_purchase_complete( $payment );
 
-				if ( 'yes' == $this->debug ) {
-					$this->log->add( 'mpay24', 'Payment complete.' );
+				// Mark purchase complete
+				// TODO not sure how this would be handled with mixed payments :/
+				$purchase_id = $payment->get_purchase();
+				$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
+				// Mark as pending so the function can proceed
+				$purchase->set_pending();
+				// Mark as complete, run purchase_completed
+				$purchase->complete();
+
+				// Mark payment
+				$items_captured = array(); // Creating simple array of items that are captured
+				foreach ( $payment->get_deals() as $item ) {
+					$items_captured[] = $item['deal_id'];
 				}
+				do_action( 'payment_authorized', $payment );
+				do_action( 'payment_captured', $payment, $items_captured );
+				do_action( 'payment_complete', $payment );
+				$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
 				break;
-			case 'reserved':
+			case 'RESERVED':
 				// Order pending
 				// default is pending, nothing to do.
 				break;
-			case 'error':
-			case 'suspended':
+			case 'ERROR':
+			case 'SUSPENDED':
 				// Order failed
-			case 'credited':
+			case 'CREDITED':
 				// Refunded
-			case 'reversed':
+			case 'REVERSED':
 				// Order cancelled
 				$payment->set_status( Group_Buying_Payment::STATUS_VOID );
 				break;
@@ -300,35 +304,24 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 				// No action
 				break;
 			}
-			exit;
+
 		}
+
 	}
 
-	public static function mark_payment_and_purchase_complete( Group_Buying_Payment $payment ) {
-		// Mark purchase complete
-		// TODO not sure how this would be handled with mixed payments :/
-		$purchase_id = $payment->get_purchase();
-		$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
-		// Mark as pending so the function can proceed
-		$purchase->set_pending();
-		// Mark as complete, run purchase_completed
-		$purchase->complete();
-
-		// Mark payment
-		$items_captured = array(); // Creating simple array of items that are captured
-		foreach ( $payment->get_deals() as $item ) {
-			$items_captured[] = $item['deal_id'];
-		}
-		do_action( 'payment_authorized', $payment );
-		do_action( 'payment_captured', $payment, $items_captured );
-		do_action( 'payment_complete', $payment );
-		$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
+	public function get_transaction_status( Group_Buying_Payment $payment, $args = array() ) {
+		$data = $payment->get_data();
+		$shop = self::init_shop();
+		$transaction = $shop->updateTransactionStatus( $payment->get_id() );
+		error_log( 'get_transaction_status transaction' . print_r( $transaction, TRUE ) );
+		return $transaction->params['TSTATUS'];
 	}
 
 	public function payment_controls( $controls, Group_Buying_Checkouts $checkout ) {
 		$style = '';
 		if ( isset( $controls['review'] ) ) {
-			$controls['review'] = str_replace( 'value="Review"', $style . ' value="'.self::__( 'MPay24' ).'"', $controls['review'] );
+			//$style = 'style="box-shadow: none;-moz-box-shadow: none;-webkit-box-shadow: none; display: block; width: 208px; height: 32px; background-color: transparent; background-image: url(https://www.mpay24.com/web/img/logos/payment-mpay24.png); background-position: 0 0; background-repeat: no-repeat; padding: 42px 0 0 0; border: none; cursor: pointer; text-indent: -9000px; margin-top: 12px;"';
+			$controls['review'] = str_replace( 'value="Review"', $style . ' value="'.self::__( 'Pay with mPAY24' ).'"', $controls['review'] );
 		}
 		return $controls;
 	}
@@ -345,8 +338,8 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		add_settings_field( self::API_MODE_OPTION, self::__( 'Mode' ), array( $this, 'display_api_mode_field' ), $page, $section );
 		add_settings_field( self::API_USERNAME_OPTION, self::__( 'API Username' ), array( $this, 'display_api_username_field' ), $page, $section );
 		add_settings_field( self::API_PASSWORD_OPTION, self::__( 'API Password' ), array( $this, 'display_api_password_field' ), $page, $section );
-		add_settings_field( self::API_LANG_OPTION, self::__( 'Entity Key' ), array( $this, 'display_ent_password_field' ), $page, $section );
-		add_settings_field( self::CANCEL_URL_OPTION, self::__( 'Cancel URL' ), array( get_class(), 'display_cancel_field' ), $page, $section );
+		add_settings_field( self::API_LANG_OPTION, self::__( 'Language' ), array( $this, 'display_lang_field' ), $page, $section );
+		add_settings_field( self::CANCEL_URL_OPTION, self::__( 'Cancel URL' ), array( $this, 'display_cancel_field' ), $page, $section );
 	}
 
 	public function display_api_username_field() {
@@ -367,7 +360,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	}
 
 	public function display_cancel_field() {
-		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.self::$cancel_url.'" size="80" />';
+		echo '<input type="text" name="'.self::CANCEL_URL_OPTION.'" value="'.$this->cancel_url.'" size="80" />';
 	}
 
 	public function display_exp_meta_box() {

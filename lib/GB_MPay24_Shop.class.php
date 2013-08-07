@@ -220,18 +220,22 @@ class GB_MPAY24_Shop extends MPay24Shop {
 
 		$data['transaction_data']['updated_at'] = date( 'Y-m-d H:i:s', time() );
 
-		if ( ! is_null( $this->log ) ) {
-			$this->log->add( 'mpay24', $result );
-		}
+		error_log( 'updateTransaction: ' . print_r( $result, TRUE ) );
 	}
 
-	public function getTransaction( $tid ) {
+	public function getTransaction( $tid = 0 ) {
+		if ( !$tid )
+			return;
+
 		$payment = Group_Buying_Payment::get_instance( $tid );
+		error_log( ' tid ' . print_r( $tid , TRUE ) );
 		$data = $payment->get_data();
 
 		$transaction = new Transaction( $tid );
 		$transaction->PRICE = $payment->get_amount();
 		$transaction->SECRET = $data['secret'];
+
+		error_log( 'get transaction ' . print_r( $data, TRUE ) );
 
 		return $transaction;
 	}
@@ -253,6 +257,7 @@ class GB_MPAY24_Shop extends MPay24Shop {
 	public function write_log( $operation, $info_to_log ) {
 		$result = $operation.$info_to_log;
 
+		error_log( 'write log: ' . print_r( $result, TRUE ) );
 		if ( ! is_null( $this->log ) ) {
 			$this->log->add( 'mpay24', $result );
 		}
@@ -309,7 +314,7 @@ class GB_MPAY24_Shop extends MPay24Shop {
 		// Set the secret in the payment data
 		$data['secret'] = $secret;
 		$payment->set_data( $data );
-
+		error_log( 'createTransaction: ' . print_r( $transaction, TRUE ) );
 		return $transaction;
 	}
 
