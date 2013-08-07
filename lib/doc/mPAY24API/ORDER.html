@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: ORDER.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          ORDER.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class ORDER</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class ORDER</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../mPAY24API/MPay24Shop.html#methodcreateFinishExpressCheckoutOrder">MPay24Shop::createFinishExpressCheckoutOrder()</a></li>
+				<li><span class="field">usedby:</span> <a href="../mPAY24API/MPay24Shop.html#methodcreateExpressCheckoutOrder">MPay24Shop::createExpressCheckoutOrder()</a></li>
+				<li><span class="field">usedby:</span> <a href="../mPAY24API/MPay24Shop.html#methodcreateProfileOrder">MPay24Shop::createProfileOrder()</a></li>
+				<li><span class="field">usedby:</span> <a href="../mPAY24API/MPay24Shop.html#methodcreateMDXI">MPay24Shop::createMDXI()</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_orderXML.php.html">/orderXML.php</a> (line <span class="field"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a14">14</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																				
+												<div class="method-definition">
+											<span class="method-result">ORDER</span>
+										<a href="#ORDER" title="details" class="method-name">ORDER</a>
+											([<span class="var-type">DOMNode</span>&nbsp;<span class="var-name">$doc</span> = <span class="var-default">null</span>], [<span class="var-type">DOMNode</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">XML</span>
+										<a href="#toXML" title="details" class="method-name">toXML</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">BOOLEAN</span>
+										<a href="#validate" title="details" class="method-name">validate</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__call" title="details" class="method-name">__call</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$method</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+										<a href="#__get" title="details" class="method-name">__get</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__set" title="details" class="method-name">__set</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">ANY</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodORDER" id="ORDER"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor ORDER</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a24">24</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Create a DOMDocument or a ORDER-Object with root $doc</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ORDER</span>
+		<span class="method-name">
+			ORDER
+		</span>
+					([<span class="var-type">DOMNode</span>&nbsp;<span class="var-name">$doc</span> = <span class="var-default">null</span>], [<span class="var-type">DOMNode</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">DOMNode</span>
+				<span class="var-name">$doc</span><span class="var-description">: The root DOMNode of an XML tree</span>			</li>
+					<li>
+				<span class="var-type">DOMNode</span>
+				<span class="var-name">$node</span><span class="var-description">: The child DOMNode</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtoXML" id="toXML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">toXML</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a127">127</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The created XML from the ORDER</li>
+				<li><span class="field">abstract:</span> Create a XML-Object from the ORDER-Object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			toXML
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodvalidate" id="validate"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validate</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a137">137</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE if the validation was successful or FALSE</li>
+				<li><span class="field">abstract:</span> Validate the ORDER with the schema, defined in the constant MDXI_SCHEMA</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> CONSTANT - MDXI_SCHEMA</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">BOOLEAN</span>
+		<span class="method-name">
+			validate
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method__call" id="__call"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">__call</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a46">46</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Generic call-Method instead of numerous setter methods</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__call
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$method</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$method</span><span class="var-description">: The name of the method, which is called for the Item-Object</span>			</li>
+					<li>
+				<span class="var-type">ARRAY</span>
+				<span class="var-name">$args</span><span class="var-description">: <p>The arguments with them the method is called - minOccurance = 0, maxOccurance = 2:</p><p>The first argument must be a positive integer (will be used as a index)</p><p>The second argument is optional and would be used as value for the DOMNode</p></span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method__get" id="__get"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">__get</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a85">85</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The ORDER-Object of a DOMDocument tree</li>
+				<li><span class="field">abstract:</span> Get the value of a ORDER-Variable</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+		<span class="method-name">
+			__get
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$name</span><span class="var-description">: The name of the Node you need</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method__set" id="__set"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">__set</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__orderXML.php.html#a107">107</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Set the value of a ORDER-Variable</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__set
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">ANY</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$name</span><span class="var-description">: The name of the Node you want to set</span>			</li>
+					<li>
+				<span class="var-type">ANY</span>
+				<span class="var-name">$value</span><span class="var-description">: The value of the Node you want to set</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 31 May 2011 09:56:05 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

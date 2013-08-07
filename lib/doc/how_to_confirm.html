@@ -1,0 +1,108 @@
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: how_to_confirm.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          how_to_confirm.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+<html>
+<head>
+    <title>mPAY24API Documentation</title>
+            <link rel="stylesheet" href="media/stylesheet.css" />
+            <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+</head>
+<body>
+<div align="center"><h1>How to work with the confirmation</h1></div>
+<p>
+    After you're already familiar with the requests to mPAY24 (see <a href="blank.html">hier</a>) it's time to show you 
+    how to interact with the mPAY24 confirmation interface. For details please read the "Specification of the mPAY24 interfaces".
+    <br>
+    In general there are 3 important things you should do:   
+</p>
+<h2>STEP 1</h2>
+Create a new file - for example confirm.php - you should include the initial index.php, where the class MyShop was defined.
+The mPAY24 confirmation interface send (via GET) a list of parameters every time when a transaction has changed it's status - by initiating
+(RESERVED/BILLED/ERROR), by clearing (BILLED), by crediting (CREDITED), by canceling (CANCELED). The only thing you should do is to "save" these
+attributes into array and pass the array to the method <a href="mPAY24API/MPay24Shop.html#confirm" title="details" class="method-name">
+confirm</a> together with the transaction ID for the transaction you want to update.
+<br><br>
+<textarea rows="10" cols="120">
+<?php
+  include("index.php");            
+            
+  foreach($_GET as $key => $value){
+    if($key !== 'TID')
+      $args[$key] = $value;
+    
+  $myShop = new MyShop("merchantID", "SOAPPassword", TRUE, "proxyHost", "proxyPort");
+  $myShop->confirm($_GET['TID'], $args);
+?>                                                       
+</textarea>
+
+<h2>STEP 2</h2>
+The <a href="mPAY24API/MPay24Shop.html#confirm" title="details" class="method-name">confirm</a> method requires the implementation of the
+two abstract mehtods in our MyShop class - <a href="mPAY24API/MPay24Shop.html#updateTransaction" title="details" class="method-name">
+updateTransaction</a> and <a href="mPAY24API/MPay24Shop.html#getTransaction" title="details" class="method-name">getTransaction</a>.
+<br><br>
+<textarea rows="16" cols="120">
+  function updateTransaction($tid, $args, $shippingConfirmed){
+    $fh = fopen("result.txt", 'w') or die("can't open file");
+            
+    $result = "TID : " . $tid . "\n\ntransaction arguments:\n\n";
+    foreach($args as $key => $value)
+      $result.= $key . " = " . $value . "\n";
+            
+    fwrite($fh, $result);
+    fclose($fh);
+  } 
+  
+  function getTransaction($tid){
+    $transaction = new Transaction($this->tid);
+    $transaction->PRICE = $this->price;
+    return $transaction;
+  }                                      
+</textarea>
+<br><br>
+With the <a href="mPAY24API/MPay24Shop.html#updateTransaction" title="details" class="method-name">updateTransaction</a> we create a regular
+text file and save the information from the mPAY24 confirmation in it. The <a href="mPAY24API/MPay24Shop.html#getTransaction" title="details" class="method-name">
+getTransaction</a> method just gives us back a transaction with the specific transaction ID.
+
+<h2>STEP 3</h2>
+The last thing we need to to do is to specify the needed URLs in our MDXI XML (see chapter 4.2.9 of the specification for details). Modify
+the <a href="mPAY24API/MPay24Shop.html#createMDXI" title="details" class="method-name">createMDXI</a> method by adding a success and a confirmation URLs:
+<br><br>
+<textarea rows="13" cols="120">
+  function createMDXI($transaction){
+    $mdxi = new ORDER();
+           
+    $mdxi->Order->Tid = $transaction->TID;
+    $mdxi->Order->Price = $transaction->PRICE;
+            
+    $mdxi->Order->URL->Success = "http://" . $_SERVER['SERVER_NAME']. "/" . substr($_SERVER['SCRIPT_NAME'], 1,
+                                  strpos($_SERVER['SCRIPT_NAME'], "/", 1)-1) . "/success.php";
+    $mdxi->Order->URL->Confirmation = "http://" . $_SERVER['SERVER_NAME']. "/" . substr($_SERVER['SCRIPT_NAME'], 1,
+                                  strpos($_SERVER['SCRIPT_NAME'], "/", 1)-1) . "/confirm.php";
+            
+    return $mdxi;
+  }                                     
+</textarea>
+<br><br>
+Now we only need to create the success.php (which will be called from mPAY24 in case the transaction was successful, after the mPAY24 pay page 
+was closed).
+<br><br>
+<textarea rows="8" cols="120">
+<?php
+  $file_handle = fopen("result.txt", "r");
+  while (!feof($file_handle)) {
+    $line = fgets($file_handle);
+    echo $line . "<br>";
+  }
+  fclose($file_handle);
+?>                                 
+</textarea>
+<br><br>
+The success.php does nothing but only open the file created from the confirmation and prints out its content in your browser. You can also 
+analogical define an error and cancel URLs.
+</body>
+</html>

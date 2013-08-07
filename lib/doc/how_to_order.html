@@ -1,0 +1,188 @@
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: how_to_order.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          how_to_order.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+<html>
+<head>
+    <title>mPAY24API Documentation</title>
+            <link rel="stylesheet" href="media/stylesheet.css" />
+            <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+</head>
+<body>
+<div align="center"><h1>How to work with ORDER objects</h1></div>
+<h2>Basics</h2>
+<p>
+    In the mPAY24 context an ORDER is an object, represented by a XML, which contains all the usual information of a shopping cart.
+    <br />For example: price, currency, items, billing address, shipping address, descriptions for the rows of the shopping cart, etc.
+    <br />As you might have read in the specification of the mPAY24 interfaces there is a 
+    <a href="https://www.mpay24.com/schemas/MDXI/v3.0/MDXI.xsd">MDXI schema</a>, which defines the order,
+    the type and the allowed count of all these elements. This is also specified in chapter 4.2.9 of the specification.
+    <br />Accordingly to this schema and using the <a href="mPAY24API/ORDER.html">ORDER</a> class we support, you can create a MDXI-XML very easy. 
+</p>
+
+<p>
+    The first thing you should do is to instantiate an object from the <a href="mPAY24API/ORDER.html">ORDER</a> type.
+    <br />
+    <textarea rows=2 cols=75>
+$mdxi = new ORDER();
+    </textarea>
+    <br />
+    You could then start the creation of the xml-nodes fully intuitional. To create a text (TODO!!!) node with a value you only need to know the position of the node
+    and it's value - for example if you want to create a node with value "a.b@c.de" as "Email" node, which is in the node "BillingAddr" and the "BillingAddr"
+    node is in the "Order" node you should only type the following:
+    <br />
+    <textarea rows=2 cols=75>
+$mdxi->Order->BillingAddr->EMail = "a.b@c.de";
+    </textarea>
+    <br />
+    So you don't need to explicitly create the container nodes - "Order" and "BillingAddr".
+    <br />
+    You can also pass attributes for a node with only one set function call:
+    <br />
+    <textarea rows=2 cols=75>
+$mdxi->Order->BillingAddr->setMode("ReadOnly");
+    </textarea>
+    <br />
+    With last function call we have created and set a "Mode" attribute for the node "BillingAddr", which equals "ReadOnly".
+    <br /><br />
+    If the set value equals "", the attribute will not be created.
+    <br /><br />
+    If you want to create more than one node of the same type you can create it by calling the node as a method with an index as attribute.
+    The index can only be a positive integer!
+    <br />
+    <textarea rows=2 cols=75>
+$mdxi->Order->PaymentTypes->Payment(3)->setType("PAYPAL");
+    </textarea>
+    <br />
+</p>
+
+<h2>Example</h2>
+<table>
+    <tr>
+        <th>Input</th>
+        <th>Output</th>
+    </tr>   
+    <tr>
+<td>
+<textarea rows=55 cols=75>
+$mdxi = new ORDER();
+$mdxi->Order->setLogoStyle(""); // is empty, so will be not set
+
+$mdxi->Order->UserField = "My User Field";
+$mdxi->Order->Tid = "My Transaction ID";
+
+$mdxi->Order->TemplateSet = "WEB";
+$mdxi->Order->TemplateSet->setLanguage("DE");
+
+$mdxi->Order->PaymentTypes->setEnable("true");
+
+$mdxi->Order->PaymentTypes->Payment(1)->setType("CC");
+$mdxi->Order->PaymentTypes->Payment(1)->setBrand("VISA");
+
+$mdxi->Order->PaymentTypes->Payment(2)->setType("CC");
+$mdxi->Order->PaymentTypes->Payment(2)->setBrand("MASTERCARD");
+
+$mdxi->Order->PaymentTypes->Payment(3)->setType("MAESTRO");
+
+$mdxi->Order->ShoppingCart->Description = "Order Description";
+
+$mdxi->Order->ShoppingCart->Item(1)->Number = "Item Number 1";
+$mdxi->Order->ShoppingCart->Item(1)->ProductNr = "Product Number 1";
+$mdxi->Order->ShoppingCart->Item(1)->Description = "Description 1";
+$mdxi->Order->ShoppingCart->Item(1)->Package = "Package 1";
+$mdxi->Order->ShoppingCart->Item(1)->Quantity = 2;
+$mdxi->Order->ShoppingCart->Item(1)->ItemPrice = 12.34;
+$mdxi->Order->ShoppingCart->Item(1)->ItemPrice->setTax(1.23);
+$mdxi->Order->ShoppingCart->Item(1)->Price = 24.68;
+
+$mdxi->Order->ShoppingCart->Item(2)->Number = "Item Number 2";
+$mdxi->Order->ShoppingCart->Item(2)->ProductNr = "Product Number 2";
+$mdxi->Order->ShoppingCart->Item(2)->Description = "Description 2";
+$mdxi->Order->ShoppingCart->Item(2)->Package = "Package 2";
+$mdxi->Order->ShoppingCart->Item(2)->Quantity = 1;
+$mdxi->Order->ShoppingCart->Item(2)->ItemPrice = 5.67;
+$mdxi->Order->ShoppingCart->Item(2)->Price = 5.67;
+
+$mdxi->Order->Price = 30.35;
+
+$mdxi->Order->Currency = "USD";
+
+$mdxi->Order->Customer->setUseProfile("true");
+$mdxi->Order->Customer->setId("98765");
+    
+$mdxi->Order->BillingAddr->setMode("ReadWrite");
+$mdxi->Order->BillingAddr->Name = "Max Musterman";
+$mdxi->Order->BillingAddr->Street = "Teststreet 1";
+$mdxi->Order->BillingAddr->Street2 = "Teststreet 2";
+$mdxi->Order->BillingAddr->Zip = "1010";
+$mdxi->Order->BillingAddr->City = "Wien";
+$mdxi->Order->BillingAddr->Country->setCode("AT");
+$mdxi->Order->BillingAddr->Email = "a.b@c.de";
+</textarea>
+</td>
+<td>
+<textarea rows=55 cols=75>
+<?xml version="1.0" encoding="UTF-8"?>
+<Order>
+    
+    <UserField>My User Field</UserField>
+    <Tid>My Transaction ID</Tid>
+  
+    <TemplateSet Language="DE">WEB</TemplateSet>
+  
+    <PaymentTypes Enable="true">
+        
+        
+        <Payment Type="CC" Brand="VISA"/>
+        
+        
+        <Payment Type="CC" Brand="MASTERCARD"/>
+        
+        
+        <Payment Type="MAESTRO"/>
+    </PaymentTypes>
+    <ShoppingCart>
+        <Description>Order Description</Description>
+        <Item>
+            <Number>Item Number 1</Number>
+            <ProductNr>Product Number 1</ProductNr>
+            <Description>Description 1</Description>
+            <Package>Package 1</Package>
+            <Quantity>2</Quantity>
+            <ItemPrice Tax="1.23">12.34</ItemPrice>
+            <Price>24.68</Price>
+        </Item>
+        <Item>
+            <Number>Item Number 2</Number>
+            <ProductNr>Product Number 2</ProductNr>
+            <Description>Description 2</Description>
+            <Package>Package 2</Package>
+            <Quantity>1</Quantity>
+            <ItemPrice>5.67</ItemPrice>
+            <Price>5.67</Price>
+        </Item>
+    </ShoppingCart>
+    <Price>30.35</Price>
+    <Currency>USD</Currency>
+    <Customer UseProfile="true" Id="98765"/>
+  
+    <BillingAddr Mode="ReadWrite">
+        <Name>Max Musterman</Name>
+        <Street>Teststreet 1</Street>
+        <Street2>Teststreet 2</Street2>
+        <Zip>1010</Zip>
+        <City>Wien</City>
+        <Country Code="AT"/>
+        <Email>a.b@c.de</Email>
+    </BillingAddr>
+</Order>
+</textarea>
+</td>
+</tr>
+</table>
+</body>
+</html>

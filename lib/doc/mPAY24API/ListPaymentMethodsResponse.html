@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: ListPaymentMethodsResponse.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          ListPaymentMethodsResponse.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class ListPaymentMethodsResponse</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class ListPaymentMethodsResponse</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">usedby:</span> <a href="../mPAY24API/MPay24Api.html#methodListPaymentMethods">MPay24Api::ListPaymentMethods()</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_MPay24Api.php.html">/MPay24Api.php</a> (line <span class="field"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a734">734</a></span>)
+		</p>
+		
+				
+		<pre><a href="../mPAY24API/GeneralResponse.html">GeneralResponse</a>
+   |
+   --ListPaymentMethodsResponse</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																								<div class="var-title">
+					<span class="var-type">INTEGER</span>
+					<a href="#$all" title="details" class="var-name">$all</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">ARRAY</span>
+					<a href="#$brands" title="details" class="var-name">$brands</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">ARRAY</span>
+					<a href="#$descriptions" title="details" class="var-name">$descriptions</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">GeneralResponse</span>
+					<a href="#$generalResponse" title="details" class="var-name">$generalResponse</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">ARRAY</span>
+					<a href="#$pTypes" title="details" class="var-name">$pTypes</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																												
+												<div class="method-definition">
+											<span class="method-result">ListPaymentMethodsResponse</span>
+										<a href="#ListPaymentMethodsResponse" title="details" class="method-name">ListPaymentMethodsResponse</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$response</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">INTEGER</span>
+										<a href="#getAll" title="details" class="method-name">getAll</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getBrand" title="details" class="method-name">getBrand</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ARRAY</span>
+										<a href="#getBrands" title="details" class="method-name">getBrands</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getDescription" title="details" class="method-name">getDescription</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ARRAY</span>
+										<a href="#getDescriptions" title="details" class="method-name">getDescriptions</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">GeneralResponse</span>
+										<a href="#getGeneralResponse" title="details" class="method-name">getGeneralResponse</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getPType" title="details" class="method-name">getPType</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ARRAY</span>
+										<a href="#getPTypes" title="details" class="method-name">getPTypes</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$all" id="$all"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">INTEGER</span>
+			<span class="var-name">$all</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a744">744</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> The count of the payment methods, which are activated by mPAY24</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$brands" id="$brands"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">ARRAY</span>
+			<span class="var-name">$brands</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a752">752</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> A list with the brands, activated by mPAY24</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$descriptions" id="$descriptions"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">ARRAY</span>
+			<span class="var-name">$descriptions</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a756">756</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> A list with the descriptions of the payment methods, activated by mPAY24</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$generalResponse" id="$generalResponse"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">GeneralResponse</span>
+			<span class="var-name">$generalResponse</span>
+						(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a740">740</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> An object, that represents the basic values from the response from mPAY24:                                                  status and return code</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$pTypes" id="$pTypes"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">ARRAY</span>
+			<span class="var-name">$pTypes</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a748">748</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> A list with the payment types, activated by mPAY24</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../mPAY24API/GeneralResponse.html">GeneralResponse</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../mPAY24API/GeneralResponse.html#var$returnCode">GeneralResponse::$returnCode</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../mPAY24API/GeneralResponse.html#var$status">GeneralResponse::$status</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodListPaymentMethodsResponse" id="ListPaymentMethodsResponse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor ListPaymentMethodsResponse</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a763">763</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Sets the values for a payment from the response from mPAY24:                                                  count, payment types, brands and descriptions</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ListPaymentMethodsResponse</span>
+		<span class="method-name">
+			ListPaymentMethodsResponse
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$response</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$response</span><span class="var-description">: The SOAP response from mPAY24 (in XML form)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetAll" id="getAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAll</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a782">782</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The count of the payment methods, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">INTEGER</span>
+		<span class="method-name">
+			getAll
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetBrand" id="getBrand"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBrand</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a819">819</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> A brand, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getBrand
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$i</span><span class="var-description">: The index of a brand</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetBrands" id="getBrands"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBrands</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a796">796</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The brands, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ARRAY</span>
+		<span class="method-name">
+			getBrands
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetDescription" id="getDescription"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getDescription</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a827">827</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> A description, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getDescription
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$i</span><span class="var-description">: The index of a description</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetDescriptions" id="getDescriptions"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getDescriptions</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a803">803</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The descriptions, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ARRAY</span>
+		<span class="method-name">
+			getDescriptions
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetGeneralResponse" id="getGeneralResponse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getGeneralResponse</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a835">835</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The object, that contains the basic values from the response from mPAY24:                                                  status and return code</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">GeneralResponse</span>
+		<span class="method-name">
+			getGeneralResponse
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetPType" id="getPType"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPType</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a811">811</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> A payment type, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getPType
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$i</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$i</span><span class="var-description">: The index of a payment type</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetPTypes" id="getPTypes"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPTypes</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a789">789</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The payment types, returned from mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ARRAY</span>
+		<span class="method-name">
+			getPTypes
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../mPAY24API/GeneralResponse.html">GeneralResponse</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../mPAY24API/GeneralResponse.html#methodGeneralResponse">GeneralResponse::GeneralResponse()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/GeneralResponse.html#methodgetReturnCode">GeneralResponse::getReturnCode()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/GeneralResponse.html#methodgetStatus">GeneralResponse::getStatus()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 31 May 2011 09:56:03 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

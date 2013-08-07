@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: MPay24Api.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          MPay24Api.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class MPay24Api</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class MPay24Api</h2>
+<h2 class="class-name">ATTENTION - The following class is used from <a class="field" href="MPay24Shop.html">MPay24Shop</a>, 
+so you are not supposed to use it. For understanding how to use the mPAY24 PHP API click <a href="../blank.html">hier</a>.</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">author:</span> support@mpay24.com</li>
+				<li><span class="field">version:</span> $Id: MPay24Api.html 5217 2012-10-16 05:27:43Z anna $</li>
+				<li><span class="field">license:</span> <a href="http://ec.europa.eu/idabc/eupl.html">EUPL, Version 1.1</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_MPay24Api.php.html">/MPay24Api.php</a> (line <span class="field"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a9">9</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#CallbackPaypal" title="details" class="method-name">CallbackPaypal</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$requestString</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">1</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">2</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">3</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">4</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#configure" title="details" class="method-name">configure</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$merchantID</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$soapPassword</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$test</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyHost</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$proxyPort</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#ExpressCheckoutPayment" title="details" class="method-name">ExpressCheckoutPayment</a>
+											(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$requestString</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getEtpURL" title="details" class="method-name">getEtpURL</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getMerchantID" title="details" class="method-name">getMerchantID</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getRequest" title="details" class="method-name">getRequest</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">STRING</span>
+										<a href="#getResponse" title="details" class="method-name">getResponse</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+										<a href="#LessClear" title="details" class="method-name">LessClear</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$currency</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ListPaymentMethodsResponse.html">ListPaymentMethodsResponse</a></span>
+										<a href="#ListPaymentMethods" title="details" class="method-name">ListPaymentMethods</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+										<a href="#ManualCredit" title="details" class="method-name">ManualCredit</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$currency</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$customer</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+										<a href="#ManualReverse" title="details" class="method-name">ManualReverse</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">SelectPaymentResponse</span>
+										<a href="#ProfilePayment" title="details" class="method-name">ProfilePayment</a>
+											(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$requestString</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">BOOLEAN</span>
+										<a href="#proxyUsed" title="details" class="method-name">proxyUsed</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#SelectPayment" title="details" class="method-name">SelectPayment</a>
+											(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$mdxi</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/TransactionStatusResponse.html">TransactionStatusResponse</a></span>
+										<a href="#TransactionStatus" title="details" class="method-name">TransactionStatus</a>
+											([<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span> = <span class="var-default">null</span>], [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span> = <span class="var-default">null</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodCallbackPaypal" id="CallbackPaypal"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">CallbackPaypal</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a257">257</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			CallbackPaypal
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$requestString</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">1</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">2</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">3</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">4</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">1</span><span class="var-description">: The transaction ID, supported from mPAY24</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">2</span><span class="var-description">: The positive shipping costs for the transaction multiply by 100</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">3</span><span class="var-description">: The positive amount to be reserved/billed multiply by 100</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">4</span><span class="var-description">: In case of &quot;true&quot;, the transaction will be canceled, in case of &quot;false&quot; the amount will be reserved</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$requestString</span><span class="var-description">: 5-digit account number, supported by mPAY24</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodconfigure" id="configure"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">configure</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a77">77</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Set the basic (mandatory) settings for the requests</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			configure
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$merchantID</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$soapPassword</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$test</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyHost</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$proxyPort</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$merchantID</span><span class="var-description">: <p>5-digit account number, supported by mPAY24</p><p>TEST accounts - starting with 9</p><p>LIVE account - starting with 7</p></span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$soapPassword</span><span class="var-description">: The webservice's password, supported by mPAY24</span>			</li>
+					<li>
+				<span class="var-type">BOOLEAN</span>
+				<span class="var-name">$test</span><span class="var-description">: <p>TRUE - when you want to use the TEST system</p><p>FALSE - when you want to use the LIVE system</p></span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$proxyHost</span><span class="var-description">: The host name in case you are behind a proxy server (&quot;&quot; when not)</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$proxyPort</span><span class="var-description">: 4-digit port number in case you are behind a proxy server (&quot;&quot; when not)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodExpressCheckoutPayment" id="ExpressCheckoutPayment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ExpressCheckoutPayment</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a224">224</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Start a secure payment using a PayPal Express Checkout, supported by mPAY24 -                                                  the customer doesn't need to be logged in in the shop or to give any data                                                  (addresses or payment information), but will be redirected to the PayPal site,                                                  and all the information from PayPal will be taken for the payment.</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			ExpressCheckoutPayment
+		</span>
+					(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$requestString</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+				<span class="var-name">$requestString</span><span class="var-description">: The order xml, which contains the shopping cart</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetEtpURL" id="getEtpURL"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getEtpURL</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a97">97</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The URL where the requests are sending to</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getEtpURL
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetMerchantID" id="getMerchantID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMerchantID</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a90">90</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> 5-digit merchant ID</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getMerchantID
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetRequest" id="getRequest"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRequest</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a104">104</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The request, which was sent to mPAY24 (in XML form)</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getRequest
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetResponse" id="getResponse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getResponse</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a111">111</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The response from mPAY24 (in XML form)</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">STRING</span>
+		<span class="method-name">
+			getResponse
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodLessClear" id="LessClear"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">LessClear</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a292">292</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Clear a transaction with an amount</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+		<span class="method-name">
+			LessClear
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$currency</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$mPAYTid</span><span class="var-description">: The mPAY24 transaction ID</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount to be cleared multiplay by 100</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$currency</span><span class="var-description">: 3-digit ISO currency code: EUR, USD, etc</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodListPaymentMethods" id="ListPaymentMethods"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ListPaymentMethods</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a130">130</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Get all the payment methods, that are available for the merchant by mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ListPaymentMethodsResponse.html">ListPaymentMethodsResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ListPaymentMethodsResponse.html">ListPaymentMethodsResponse</a></span>
+		<span class="method-name">
+			ListPaymentMethods
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodManualCredit" id="ManualCredit"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ManualCredit</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a332">332</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Credit a transaction with an amount</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+		<span class="method-name">
+			ManualCredit
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$currency</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$customer</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$mPAYTid</span><span class="var-description">: The mPAY24 transaction ID</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount to be credited multiplay by 100</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$currency</span><span class="var-description">: 3-digit ISO currency code: EUR, USD, etc</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$customer</span><span class="var-description">: The name of the customer, who has paid</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodManualReverse" id="ManualReverse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ManualReverse</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a372">372</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Cancel a transaction</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ManagePaymentResponse.html">ManagePaymentResponse</a></span>
+		<span class="method-name">
+			ManualReverse
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$mPAYTid</span><span class="var-description">: The mPAY24 transaction ID for the transaction you want to cancel</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodProfilePayment" id="ProfilePayment"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ProfilePayment</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a194">194</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Start a secure payment using a PROFILE (mPAY24 proSAFE), supported by mPAY24 -                                                  a customer profile (you have already created) will be used for the payment.                                                  The payment window will not be called, the payment source (for example credit card),                                                  which was used from the customer by the last payment will be used for the transaction.</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">SelectPaymentResponse</span>
+		<span class="method-name">
+			ProfilePayment
+		</span>
+					(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$requestString</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+				<span class="var-name">$requestString</span><span class="var-description">: The order xml, which contains the shopping cart</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodproxyUsed" id="proxyUsed"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">proxyUsed</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a118">118</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether a proxy is used</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">BOOLEAN</span>
+		<span class="method-name">
+			proxyUsed
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodSelectPayment" id="SelectPayment"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">SelectPayment</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a157">157</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Start a secure payment through the mPAY24 payment window -                                                  the sensible data (credit card numbers, bank account numbers etc)                                                  is (will be) not saved in the shop</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			SelectPayment
+		</span>
+					(<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>&nbsp;<span class="var-name">$mdxi</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+				<span class="var-name">$mdxi</span><span class="var-description">: The mdxi xml, which contains the shopping cart</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodTransactionStatus" id="TransactionStatus"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">TransactionStatus</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Api.php.html#a404">404</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Get all the information for a transaction, supported by mPAY24</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/TransactionStatusResponse.html">TransactionStatusResponse</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/TransactionStatusResponse.html">TransactionStatusResponse</a></span>
+		<span class="method-name">
+			TransactionStatus
+		</span>
+					([<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$mPAYTid</span> = <span class="var-default">null</span>], [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$mPAYTid</span><span class="var-description">: The mPAY24 transaction ID</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID from your shop</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 31 May 2011 09:56:03 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

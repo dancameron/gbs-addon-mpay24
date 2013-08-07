@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- 
+	/**
+	 * @author              support@mpay24.com
+	 * @version             $Id: MPay24Shop.html 5217 2012-10-16 05:27:43Z anna $
+	 * @filesource          MPay24Shop.html
+	 * @license             http://ec.europa.eu/idabc/eupl.html EUPL, Version 1.1
+	 */
+ -->
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class MPay24Shop</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class MPay24Shop</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_MPay24Shop.php.html">/MPay24Shop.php</a> (line <span class="field"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a12">12</a></span>)
+		</p>
+		
+				
+		<pre><a href="../mPAY24API/Transaction.html">Transaction</a>
+   |
+   --MPay24Shop</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																								<div class="var-title">
+					<span class="var-type">MPAY24API</span>
+					<a href="#$mPay24Api" title="details" class="var-name">$mPay24Api</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">MPay24Shop</span>
+										<a href="#MPay24Shop" title="details" class="method-name">MPay24Shop</a>
+											(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$merchantID</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$soapPassword</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$test</span>, [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyHost</span> = <span class="var-default">null</span>], [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyPort</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#cancelTransaction" title="details" class="method-name">cancelTransaction</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#clearAmount" title="details" class="method-name">clearAmount</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#confirm" title="details" class="method-name">confirm</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">XML</span>
+										<a href="#createExpressCheckoutOrder" title="details" class="method-name">createExpressCheckoutOrder</a>
+											(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">XML</span>
+										<a href="#createFinishExpressCheckoutOrder" title="details" class="method-name">createFinishExpressCheckoutOrder</a>
+											(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$shippingCosts</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cancel</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+										<a href="#createMDXI" title="details" class="method-name">createMDXI</a>
+											(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$transaction</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">XML</span>
+										<a href="#createProfileOrder" title="details" class="method-name">createProfileOrder</a>
+											(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">HASHED_STRING</span>
+										<a href="#createSecret" title="details" class="method-name">createSecret</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">CURRENCY</span>&nbsp;<span class="var-name">$currency</span>, <span class="var-type">DATE</span>&nbsp;<span class="var-name">$timeStamp</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Transaction</span>
+										<a href="#createTransaction" title="details" class="method-name">createTransaction</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#creditAmount" title="details" class="method-name">creditAmount</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#finishExpressCheckoutPayment" title="details" class="method-name">finishExpressCheckoutPayment</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$shippingCosts</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$cancel</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ARRAY</span>
+										<a href="#getPaymentMethods" title="details" class="method-name">getPaymentMethods</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">HASHED_STRING</span>
+										<a href="#getSecret" title="details" class="method-name">getSecret</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Transaction</span>
+										<a href="#getTransaction" title="details" class="method-name">getTransaction</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#pay" title="details" class="method-name">pay</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#payWithExpressCheckout" title="details" class="method-name">payWithExpressCheckout</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+										<a href="#payWithProfile" title="details" class="method-name">payWithProfile</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Transaction</span>
+										<a href="#updateTransaction" title="details" class="method-name">updateTransaction</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$shippingConfirmed</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ARRAY</span>
+										<a href="#updateTransactionStatus" title="details" class="method-name">updateTransactionStatus</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#write_log" title="details" class="method-name">write_log</a>
+											(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$operation</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$info_to_log</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$mPay24Api" id="$mPay24Api"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">MPAY24API</span>
+			<span class="var-name">$mPay24Api</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a17">17</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> The mPAY24API Object, with you are going to work</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../mPAY24API/Transaction.html">Transaction</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../mPAY24API/Transaction.html#var$allowedProperties">Transaction::$allowedProperties</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../mPAY24API/Transaction.html#var$properties">Transaction::$properties</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodMPay24Shop" id="MPay24Shop"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor MPay24Shop</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a36">36</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> The constructor, which sets all the initial values                                                  to be able making transactions</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">MPay24Shop</span>
+		<span class="method-name">
+			MPay24Shop
+		</span>
+					(<span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$merchantID</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$soapPassword</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$test</span>, [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyHost</span> = <span class="var-default">null</span>], [<span class="var-type">STRING</span>&nbsp;<span class="var-name">$proxyPort</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$merchantID</span><span class="var-description">: <p>5-digit account number, supported by mPAY24</p><p>TEST accounts - starting with 9</p><p>LIVE account - starting with 7</p></span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$soapPassword</span><span class="var-description">: The webservice's password, supported by mPAY24</span>			</li>
+					<li>
+				<span class="var-type">BOOLEAN</span>
+				<span class="var-name">$test</span><span class="var-description">: <p>TRUE - when you want to use the TEST system</p><p>FALSE - when you want to use the LIVE system</p></span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$proxyHost</span><span class="var-description">: The host name in case you are behind a proxy server (&quot;&quot; when not)</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$proxyPort</span><span class="var-description">: 4-digit port number in case you are behind a proxy server (&quot;&quot; when not)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcancelTransaction" id="cancelTransaction"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">cancelTransaction</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a535">535</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			cancelTransaction
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID, for the transaction you want to cancel</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodclearAmount" id="clearAmount"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">clearAmount</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a465">465</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			clearAmount
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID, for the transaction you want to clear</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount you want to clear multiply by 100</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodconfirm" id="confirm"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">confirm</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a335">335</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			confirm
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID, for the transaction you want to confirm</span>			</li>
+					<li>
+				<span class="var-type">ARRAY</span>
+				<span class="var-name">$args</span><span class="var-description">: The arguments you want to set for this transaction</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateExpressCheckoutOrder" id="createExpressCheckoutOrder"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createExpressCheckoutOrder</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a127">127</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The ORDER, needed for a transaction to be started</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ORDER.html">ORDER</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			createExpressCheckoutOrder
+		</span>
+					(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Transaction</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction you want to make an order transaction XML file for</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateFinishExpressCheckoutOrder" id="createFinishExpressCheckoutOrder"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">createFinishExpressCheckoutOrder</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a136">136</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The ORDER, needed for a transaction to be started</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ORDER.html">ORDER</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			createFinishExpressCheckoutOrder
+		</span>
+					(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$shippingCosts</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cancel</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Transaction</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction you want to make an order transaction XML file for</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$shippingCosts</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$amount</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$cancel</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateMDXI" id="createMDXI"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createMDXI</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a109">109</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The MDXI, needed for a transaction to be started</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ORDER.html">ORDER</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/ORDER.html">ORDER</a></span>
+		<span class="method-name">
+			createMDXI
+		</span>
+					(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$transaction</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Transaction</span>
+				<span class="var-name">$transaction</span><span class="var-description">: The transaction you want to make a MDXI XML file for</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateProfileOrder" id="createProfileOrder"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">createProfileOrder</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a118">118</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The ORDER, needed for a transaction to be started</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/ORDER.html">ORDER</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">XML</span>
+		<span class="method-name">
+			createProfileOrder
+		</span>
+					(<span class="var-type">Transaction</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Transaction</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction you want to make an order transaction XML file for</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateSecret" id="createSecret"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createSecret</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a159">159</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The secret key for the transaction</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">HASHED_STRING</span>
+		<span class="method-name">
+			createSecret
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">CURRENCY</span>&nbsp;<span class="var-name">$currency</span>, <span class="var-type">DATE</span>&nbsp;<span class="var-name">$timeStamp</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID you want to make a secret key for</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount, reserved for this transaction</span>			</li>
+					<li>
+				<span class="var-type">CURRENCY</span>
+				<span class="var-name">$currency</span><span class="var-description">: The currency for the transaction</span>			</li>
+					<li>
+				<span class="var-type">DATE</span>
+				<span class="var-name">$timeStamp</span><span class="var-description">: The timeStamp at the moment the transaction is created</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateTransaction" id="createTransaction"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">createTransaction</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a78">78</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The created transaction</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">uses:</span> <a href="../mPAY24API/Transaction.html#methodTransaction">Transaction::Transaction()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Transaction</span>
+		<span class="method-name">
+			createTransaction
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodcreditAmount" id="creditAmount"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">creditAmount</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a500">500</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			creditAmount
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID, for the transaction you want to credit</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount you want to credit multiply by 100</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfinishExpressCheckoutPayment" id="finishExpressCheckoutPayment"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">finishExpressCheckoutPayment</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a295">295</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> Including mPAY24 transaction ID</li>
+				<li><span class="field">abstract:</span> <p>Finish the payment, started with PayPal Express Checkout - reserve, bill or cancel it:</p><p>Whether are you going to reserve or bill a payment is setted at the beginning of the payment.</p><p>With the 'cancel' parameter you are able also to cancel the transaction</p></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			finishExpressCheckoutPayment
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$shippingCosts</span>, <span class="var-type">INTEGER</span>&nbsp;<span class="var-name">$amount</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$cancel</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID in the shop</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$shippingCosts</span><span class="var-description">: The shippingcosts for the transaction multiply by 100</span>			</li>
+					<li>
+				<span class="var-type">INTEGER</span>
+				<span class="var-name">$amount</span><span class="var-description">: The amount you want to reserve/bill multiply by 100</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$cancel</span><span class="var-description">: ALLOWED: &quot;true&quot; or &quot;false&quot; - in case of 'true' the transaction will be canceled, otherwise                                                  reserved/billed</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetPaymentMethods" id="getPaymentMethods"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPaymentMethods</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a172">172</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> A list which includes all the payment methods (activated by mPAY24)                                                  for your mechant ID</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ARRAY</span>
+		<span class="method-name">
+			getPaymentMethods
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetSecret" id="getSecret"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getSecret</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a166">166</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The hash for the transaction</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">HASHED_STRING</span>
+		<span class="method-name">
+			getSecret
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID you want to get the secret key for</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetTransaction" id="getTransaction"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTransaction</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a98">98</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Transaction</span>
+		<span class="method-name">
+			getTransaction
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID of the transaction you want get</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodpay" id="pay"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">pay</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a188">188</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> Including redirection URL</li>
+				<li><span class="field">abstract:</span> Start a payment</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			pay
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodpayWithExpressCheckout" id="payWithExpressCheckout"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">payWithExpressCheckout</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a254">254</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> Including redirection URL</li>
+				<li><span class="field">abstract:</span> Start a payment with PayPal Express Checkout</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			payWithExpressCheckout
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodpayWithProfile" id="payWithProfile"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">payWithProfile</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a228">228</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> Start a payment with customer profile</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../mPAY24API/PaymentResponse.html">PaymentResponse</a></span>
+		<span class="method-name">
+			payWithProfile
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodupdateTransaction" id="updateTransaction"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">updateTransaction</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a89">89</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> The updated    transaction</li>
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Transaction</span>
+		<span class="method-name">
+			updateTransaction
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>, <span class="var-type">ARRAY</span>&nbsp;<span class="var-name">$args</span>, <span class="var-type">BOOLEAN</span>&nbsp;<span class="var-name">$shippingConfirmed</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID you want to update with the confirmation</span>			</li>
+					<li>
+				<span class="var-type">ARRAY</span>
+				<span class="var-name">$args</span><span class="var-description">: Arrguments with them the transaction is to be updated</span>			</li>
+					<li>
+				<span class="var-type">BOOLEAN</span>
+				<span class="var-name">$shippingConfirmed</span><span class="var-description">: TRUE if the shipping address is confirmed, FALSE - otherwise (in case of PayPal Express Checkout)</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodupdateTransactionStatus" id="updateTransactionStatus"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">updateTransactionStatus</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a381">381</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">return:</span> <p>An array with all the data (by mPAY24) for this transaction (STATUS, CURRENCY, PRICE, APPR_CODE, etc).</p><p>Possible values for the STATUS attribute:</p><p>RESERVED - in case the authorization was successful but not cleared yet</p><p>BILLED - in case the authorization was successful and amount was cleared</p><p>CREDITED - in case amount was credited</p><p>REVERSED - in case the transaction was canceled</p><p>SUSPENDED - in case the transaction is not fully compleated yet</p><p>NOT FOUND - in case there is not such a transaction in the mPAY24 database</p><p>ERROR - in case the transaction was not successful</p></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ARRAY</span>
+		<span class="method-name">
+			updateTransactionStatus
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$tid</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$tid</span><span class="var-description">: The transaction ID (in your shop), for the transaction you are asking for</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwrite_log" id="write_log"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">write_log</span> (line <span class="line-number"><a href="../__filesource/fsource_mPAY24API__MPay24Shop.php.html#a144">144</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">abstract:</span> </li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			write_log
+		</span>
+					(<span class="var-type">STRING</span>&nbsp;<span class="var-name">$operation</span>, <span class="var-type">STRING</span>&nbsp;<span class="var-name">$info_to_log</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$operation</span><span class="var-description">: The operation, which is to log: GetPaymentMethods, Pay, PayWithProfile,                                                  Confirmation, UpdateTransactionStatus, ClearAmount, CreditAmount, CancelTransaction, etc.</span>			</li>
+					<li>
+				<span class="var-type">STRING</span>
+				<span class="var-name">$info_to_log</span><span class="var-description">: The information, which is to log: request, response, etc.</span>			</li>
+				</ul>
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../mPAY24API/Transaction.html">Transaction</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../mPAY24API/Transaction.html#methodTransaction">Transaction::Transaction()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/Transaction.html#methodgetProperties">Transaction::getProperties()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/Transaction.html#methodsetProperties">Transaction::setProperties()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/Transaction.html#method__get">Transaction::__get()</a></span><br>
+													<span class="method-name"><a href="../mPAY24API/Transaction.html#method__set">Transaction::__set()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Tue, 31 May 2011 09:56:04 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>
