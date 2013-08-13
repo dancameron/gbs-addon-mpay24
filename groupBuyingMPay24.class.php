@@ -62,9 +62,6 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		add_filter( 'group_buying_template_meta_boxes/deal-expiration.php', array( $this, 'display_exp_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-price.php', array( $this, 'display_price_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-limits.php', array( $this, 'display_limits_meta_box' ), 10 );
-
-		$purchase = Group_Buying_Purchase::get_instance(3013);
-		Group_Buying_MPay24::capture_purchase($purchase);
 	}
 
 	public static function register() {
