@@ -214,28 +214,36 @@ class GB_MPAY24_Shop extends MPay24Shop {
 	}
 
 	public function updateTransaction( $tid, $args, $shippingConfirmed ) {
-		$payment = Group_Buying_Payment::get_instance( $tid );
-		$data = $payment->get_data();
+		/*/
+		$record = Group_Buying_Record::get_instance( $tid );
+		$transaction = $record->get_data();
 		$data['transaction_data'] = $args;
 
 		$data['transaction_data']['updated_at'] = date( 'Y-m-d H:i:s', time() );
 
 		error_log( 'updateTransaction: ' . print_r( $result, TRUE ) );
+		$record->set_data( $transaction );
+		/**/
 	}
 
 	public function getTransaction( $tid = 0 ) {
 		if ( !$tid )
 			return;
 
-		$payment = Group_Buying_Payment::get_instance( $tid );
-		error_log( ' tid ' . print_r( $tid , TRUE ) );
-		$data = $payment->get_data();
+		$record = Group_Buying_Record::get_instance( $tid );
+		if ( !is_a( $record, 'Group_Buying_Record' ) ) {
+			error_log( 'record: ' . print_r( $record, TRUE ) );
+			error_log( 'get transaction failed ' . print_r( $tid, TRUE ) );
+			return;
+		}
+
+		$data = $record->get_data();
 
 		$transaction = new Transaction( $tid );
-		$transaction->PRICE = $payment->get_amount();
+		$transaction->PRICE = $data['price'];
 		$transaction->SECRET = $data['secret'];
 
-		error_log( 'get transaction ' . print_r( $data, TRUE ) );
+		error_log( 'get transaction ' . print_r( $transaction, TRUE ) );
 
 		return $transaction;
 	}
@@ -299,8 +307,7 @@ class GB_MPAY24_Shop extends MPay24Shop {
 	 * @return void
 	 */
 	public function createTransaction() {
-		$payment = Group_Buying_Payment::get_instance( $this->getTid() );
-		$data = $payment->get_data();
+		$record = Group_Buying_Record::get_instance( $this->getTid() );
 
 		$transaction = new Transaction( $this->getTid() );
 
@@ -311,9 +318,16 @@ class GB_MPAY24_Shop extends MPay24Shop {
 		$secret = $this->createSecret( $this->getTid(), $this->getPrice(), 'EUR', time() );
 		$transaction->SECRET = $secret;
 
-		// Set the secret in the payment data
-		$data['secret'] = $secret;
-		$payment->set_data( $data );
+		$data = array(
+			'tid'        => $this->getTid(),
+			'price'      => $this->getPrice() * 100,
+			'secret'     => $secret,
+			'created_at' => date( 'Y-m-d H:i:s', time() )
+			);
+
+		// Set the payment data
+		$record->set_data( $data );
+
 		error_log( 'createTransaction: ' . print_r( $transaction, TRUE ) );
 		return $transaction;
 	}

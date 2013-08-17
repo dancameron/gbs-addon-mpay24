@@ -14,6 +14,10 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	const PAYMENT_METHOD = 'MPay24';
 	const CANCEL_URL_OPTION = 'gb_paypal_cancel_url';
 	const RETURN_URL_OPTION = 'gb_paypal_return_url';
+
+	const TOKEN_KEY = 'gb_token_key'; // Combine with $blog_id to get the actual meta key
+	const TRANSACTION_TYPE = 'gb_mpay24_transaction'; // Combine with $blog_id to get the actual meta key
+
 	protected static $instance;
 	private static $api_mode = self::MODE_TEST;
 	private static $user = '';
@@ -34,6 +38,22 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		return self::PAYMENT_METHOD;
 	}
 
+	public static function register() {
+		self::add_payment_processor( __CLASS__, self::__( 'mPAY24' ) );
+	}
+
+	public static function checkout_icon() {
+		return '<img src="https://www.mpay24.com/web/img/logos/payment-mpay24.png" title="Paypal Payments" id="paypal_icon"/>';
+	}
+
+	private static function is_test_mode() {
+		return self::$api_mode == self::MODE_TEST;
+	}
+
+	public static function returned_from_offsite() {
+		return isset( $_GET['TID'] );
+	}
+
 	protected function __construct() {
 		parent::__construct();
 		self::$user = get_option( self::API_USERNAME_OPTION, '' );
@@ -46,30 +66,27 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 		add_action( 'admin_init', array( $this, 'register_settings' ), 10, 0 );
 
-		// Change button
-		add_filter( 'gb_checkout_payment_controls', array( $this, 'payment_controls' ), 20, 2 );
+		// Send offsite and handle the return
+		add_action( 'gb_send_offsite_for_payment', array( $this, 'send_offsite' ), 10, 1 );
+		add_action( 'gb_load_cart', array( $this, 'back_from_mpay24' ), 10, 0 );
 
 		// Remove pages
 		add_filter( 'gb_checkout_pages', array( $this, 'remove_checkout_pages' ) );
 
+		// payment processing
 		add_action( 'purchase_completed', array( $this, 'capture_purchase' ), 10, 1 );
 		add_action( self::CRON_HOOK, array( $this, 'capture_pending_payments' ) );
+		if ( self::DEBUG ) {
+			add_action( 'init', array( $this, 'capture_pending_payments' ), 10000 );
+		}
 
-		// Handle the return of user from mpay24
-		add_action( 'gb_load_cart', array( $this, 'back_from_mpay24' ), 10, 0 );
+		// Change button
+		add_filter( 'gb_checkout_payment_controls', array( $this, 'payment_controls' ), 20, 2 );
 
 		// Limitations
 		add_filter( 'group_buying_template_meta_boxes/deal-expiration.php', array( $this, 'display_exp_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-price.php', array( $this, 'display_price_meta_box' ), 10 );
 		add_filter( 'group_buying_template_meta_boxes/deal-limits.php', array( $this, 'display_limits_meta_box' ), 10 );
-	}
-
-	public static function register() {
-		self::add_payment_processor( __CLASS__, self::__( 'mPAY24' ) );
-	}
-
-	public static function checkout_icon() {
-		return '<img src="https://www.mpay24.com/web/img/logos/payment-mpay24.png" title="Paypal Payments" id="paypal_icon"/>';
 	}
 
 	/**
@@ -83,17 +100,91 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		return $pages;
 	}
 
-	private static function is_test_mode() {
-		return self::$api_mode == self::MODE_TEST;
-	}
-
-	public static function returned_from_offsite() {
-		return isset( $_GET['s'] ) && !isset( $_REQUEST['gb_checkout_action'] );
-	}
-
 	public static function init_shop() {
 		$shop = new GB_MPAY24_Shop( self::$user, self::$password, self::is_test_mode() );
 		return $shop;
+	}
+
+	/**
+	 */
+	public function send_offsite( Group_Buying_Checkouts $checkout ) {
+		$cart = $checkout->get_cart();
+		if ( $cart->get_total() < 0.01 ) { // for free deals.
+			return;
+		}
+
+		$filtered_total = self::get_payment_request_total( $checkout );
+		if ( $filtered_total < 0.01 ) {
+			return array();
+		}
+
+		$transaction_id = Group_Buying_Record::new_record( null, self::TRANSACTION_TYPE, 'mPay24 Transaction', get_current_user_id() );
+		self::set_token( $transaction_id ); // Set the preapproval key
+		error_log( 'record id' . print_r( $transaction_id, TRUE ) );
+
+
+		$shop = self::init_shop();
+		$shop->setTid( $transaction_id );
+		$shop->setPrice( gb_get_number_format( $filtered_total ) );
+		$shop->setLanguage( $this->lang );
+		$customer_name = $checkout->cache['billing']['first_name'].' '.$checkout->cache['billing']['last_name'];
+		$shop->setCustomer( $customer_name );
+		$shop->setCustomerId( get_current_user_id() );
+
+		$shop->setSuccessUrl( $this->return_url ); // thank you page
+		$shop->setErrorUrl ( $this->return_url );
+		$shop->setCancelUrl( $this->cancel_url );
+		$shop->setConfirmUrl( $this->return_url );
+
+		$result = $shop->pay();
+		error_log( 'result' . print_r( $result, TRUE ) );
+
+		if ( $result->getGeneralResponse()->getStatus() != "OK" ) {
+			error_log( "Error: " . $result->getExternalStatus() );
+			error_log( "Return Code: " . $result->getGeneralResponse()->getReturnCode() );
+			self::set_message( $result->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
+			return FALSE;
+		}
+
+		// Set the redirect url
+		wp_redirect( $result->getLocation() );
+		exit();
+	}
+
+	public function back_from_mpay24() {
+		if ( self::returned_from_offsite() ) {
+			// Process the order
+			if ( $this->validate_purchase( $_GET ) ) {
+				$_REQUEST['gb_checkout_action'] = 'back_from_mpay24';
+			} else {
+				$error = gb__( 'MPay24 Purchase Error. Contact the Store Owner.' );
+				self::set_message( $error, self::MESSAGE_STATUS_ERROR );
+				wp_redirect( Group_Buying_Carts::get_url() );
+				exit();
+			}
+		} elseif ( !isset( $_REQUEST['gb_checkout_action'] ) ) {
+			// this is a new checkout. clear the token so we don't give things away for free
+			self::unset_token();
+		}
+	}
+
+	public static function validate_purchase( $get ) {
+
+		foreach ( $get as $key => $value ) {
+			if ( $key !== 'TID' )
+				$args[$key] = $value;
+		}
+
+		if ( self::DEBUG ) {
+			error_log( '---------- mPay24 GET ----------' );
+			error_log( "message: " . print_r( wp_parse_args( $get ), true ) );
+		}
+
+		$shop = self::init_shop();
+		$confirm = $shop->confirm( $get['TID'], $args );
+		error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
+
+		return true;
 	}
 
 	/**
@@ -134,12 +225,17 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 			$shipping_address['postal_code'] = $checkout->cache['shipping']['postal_code'];
 			$shipping_address['country'] = $checkout->cache['shipping']['country'];
 		}
+
+		// Transaction id
+		$response['transaction_id'] = self::get_token();
+
 		// create new payment
 		$payment_id = Group_Buying_Payment::new_payment( array(
 				'payment_method' => $this->get_payment_method(),
 				'purchase' => $purchase->get_id(),
 				'amount' => gb_get_number_format( $purchase->get_total( $this->get_payment_method() ) ),
 				'data' => array(
+					'tid' => $transaction_id,
 					'uncaptured_deals' => $deal_info
 				),
 				'deals' => $deal_info,
@@ -149,83 +245,12 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 			return FALSE;
 		}
 
-		// Mark purchase as unsettled
-		$purchase->set_unsettled_status();
-		// Send offsite after checkout is complete but before the confirmation page
-		add_action( 'checkout_completed', array( $this, 'send_offsite' ), 10, 3 );
-
 		// send data back to complete_checkout
 		$payment = Group_Buying_Payment::get_instance( $payment_id );
-		do_action( 'payment_pending', $payment );
+		do_action( 'payment_authorized', $payment );
+
+		// finalize
 		return $payment;
-	}
-
-	/**
-	 */
-	public function send_offsite( Group_Buying_Checkouts $checkout, Group_Buying_Payment $payment, Group_Buying_Purchase $purchase ) {
-
-		$shop = self::init_shop();
-		$shop->setTid( $payment->get_id() );
-		$shop->setPrice( gb_get_number_format( $purchase->get_total( $this->get_payment_method() ) ) );
-		$shop->setLanguage( $this->lang );
-		$customer_name = $checkout->cache['billing']['first_name'].' '.$checkout->cache['billing']['last_name'];
-		$shop->setCustomer( $customer_name );
-		$shop->setCustomerId( $purchase->get_user() );
-
-		$shop->setSuccessUrl( $this->return_url ); // thank you page
-		$shop->setErrorUrl ( $this->return_url );
-		$shop->setCancelUrl( $this->cancel_url );
-		$shop->setConfirmUrl( $this->return_url );
-
-		$result = $shop->pay();
-
-		error_log( 'result' . print_r( $result, TRUE ) );
-
-		if ( $result->getGeneralResponse()->getStatus() != "OK" ) {
-			error_log( "Error: " . $result->getExternalStatus() );
-			error_log( "Return Code: " . $result->getGeneralResponse()->getReturnCode() );
-			self::set_message( $result->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
-			return FALSE;
-		}
-
-		// Set the redirect url
-		wp_redirect( $result->getLocation() );
-		exit();
-	}
-
-	public function back_from_mpay24() {
-		if ( isset( $_GET['TID'] ) && !isset( $_REQUEST['gb_checkout_action'] ) ) {
-			// Process the order
-			if ( $this->validate_purchase( $_GET ) ) {
-				// self::set_message( 'Payment "Pending": please wait for authorization to complete and vouchers to be activated.', self::MESSAGE_STATUS_INFO );
-				wp_redirect( add_query_arg( array( 'gb_checkout_action' => 'confirmation' ), Group_Buying_Checkouts::get_url() ) );
-				exit();
-			} else {
-				$error = gb__( 'MPay24 Purchase Error. Contact the Store Owner.' );
-				self::set_message( $error, self::MESSAGE_STATUS_ERROR );
-				wp_redirect( Group_Buying_Carts::get_url() );
-				exit();
-			}
-		}
-	}
-
-	public static function validate_purchase( $get ) {
-
-		foreach ( $get as $key => $value ) {
-			if ( $key !== 'TID' )
-				$args[$key] = $value;
-		}
-
-		if ( self::DEBUG ) {
-			error_log( '---------- mPay24 IPN Handler ----------' );
-			error_log( "message: " . print_r( wp_parse_args( $get ), true ) );
-		}
-
-		$shop = self::init_shop();
-		$confirm = $shop->confirm( $get['TID'], $args );
-		error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
-
-		return true;
 	}
 
 	/**
@@ -256,62 +281,69 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	}
 
 	public function maybe_capture_payment( Group_Buying_Payment $payment ) {
+		error_log( 'payment' . print_r( $payment, TRUE ) );
 		if ( $payment->get_payment_method() == $this->get_payment_method() && $payment->get_status() != Group_Buying_Payment::STATUS_COMPLETE ) {
-			$status = $this->get_transaction_status( $payment );
-			error_log( 'status ' . print_r( $status, TRUE ) );
-			// mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
-			switch ( $status ) {
-			case 'BILLED':
-				// Payment completed
+			$data = $payment->get_data();
 
-				// Mark purchase complete
-				// TODO not sure how this would be handled with mixed payments :/
-				$purchase_id = $payment->get_purchase();
-				$purchase = Group_Buying_Purchase::get_instance( $purchase_id );
-				// Mark as pending so the function can proceed
-				$purchase->set_pending();
-				// Mark as complete, run purchase_completed
-				$purchase->complete();
+			if ( isset( $data['tid'] ) && $data['tid'] ) { // transaction id required.
 
-				// Mark payment
-				$items_captured = array(); // Creating simple array of items that are captured
-				foreach ( $payment->get_deals() as $item ) {
-					$items_captured[] = $item['deal_id'];
+				$status = $this->get_transaction_status( $data['tid'] );
+				// mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
+				switch ( $status ) {
+				case 'BILLED':
+					// Payment completed
+					$items_captured = array(); // Creating simple array of items that are captured
+					foreach ( $payment->get_deals() as $item ) {
+						$items_captured[] = $item['deal_id'];
+					}
+					do_action( 'payment_captured', $payment, array_keys( $items_to_capture )  );
+					$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
+					do_action( 'payment_complete', $payment );
+					break;
+				case 'RESERVED':
+					// Order pending
+					// default is pending, nothing to do.
+					break;
+				case 'ERROR':
+				case 'SUSPENDED':
+					// Order failed
+				case 'CREDITED':
+					// Refunded
+				case 'REVERSED':
+					// Order cancelled
+					$payment->set_status( Group_Buying_Payment::STATUS_VOID );
+					break;
+
+				default:
+					// No action
+					break;
 				}
-				do_action( 'payment_authorized', $payment );
-				do_action( 'payment_captured', $payment, $items_captured );
-				do_action( 'payment_complete', $payment );
-				$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
-				break;
-			case 'RESERVED':
-				// Order pending
-				// default is pending, nothing to do.
-				break;
-			case 'ERROR':
-			case 'SUSPENDED':
-				// Order failed
-			case 'CREDITED':
-				// Refunded
-			case 'REVERSED':
-				// Order cancelled
-				$payment->set_status( Group_Buying_Payment::STATUS_VOID );
-				break;
-
-			default:
-				// No action
-				break;
 			}
 
 		}
 
 	}
 
-	public function get_transaction_status( Group_Buying_Payment $payment, $args = array() ) {
-		$data = $payment->get_data();
+	public function get_transaction_status( $tid ) {
 		$shop = self::init_shop();
-		$transaction = $shop->updateTransactionStatus( $payment->get_id() );
+		$transaction = $shop->updateTransactionStatus( $tid );
 		error_log( 'get_transaction_status transaction' . print_r( $transaction, TRUE ) );
 		return $transaction->params['TSTATUS'];
+	}
+
+	public static function set_token( $token ) {
+		global $blog_id;
+		update_user_meta( get_current_user_id(), $blog_id.'_'.self::TOKEN_KEY, $token );
+	}
+
+	public static function unset_token() {
+		global $blog_id;
+		delete_user_meta( get_current_user_id(), $blog_id.'_'.self::TOKEN_KEY );
+	}
+
+	public static function get_token() {
+		global $blog_id;
+		return get_user_meta( get_current_user_id(), $blog_id.'_'.self::TOKEN_KEY, TRUE );
 	}
 
 	public function payment_controls( $controls, Group_Buying_Checkouts $checkout ) {
