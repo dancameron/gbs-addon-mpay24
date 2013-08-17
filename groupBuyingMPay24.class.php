@@ -120,7 +120,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 		$transaction_id = Group_Buying_Record::new_record( null, self::TRANSACTION_TYPE, 'mPay24 Transaction', get_current_user_id() );
 		self::set_token( $transaction_id ); // Set the preapproval key
-		error_log( 'record id' . print_r( $transaction_id, TRUE ) );
+		if ( self::DEBUG ) error_log( 'record id' . print_r( $transaction_id, TRUE ) );
 
 
 		$shop = self::init_shop();
@@ -137,11 +137,11 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		$shop->setConfirmUrl( $this->return_url );
 
 		$result = $shop->pay();
-		error_log( 'result' . print_r( $result, TRUE ) );
+		if ( self::DEBUG ) error_log( 'result' . print_r( $result, TRUE ) );
 
 		if ( $result->getGeneralResponse()->getStatus() != "OK" ) {
-			error_log( "Error: " . $result->getExternalStatus() );
-			error_log( "Return Code: " . $result->getGeneralResponse()->getReturnCode() );
+			if ( self::DEBUG ) error_log( "Error: " . $result->getExternalStatus() );
+			if ( self::DEBUG ) error_log( "Return Code: " . $result->getGeneralResponse()->getReturnCode() );
 			self::set_message( $result->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
 			return FALSE;
 		}
@@ -182,7 +182,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 		$shop = self::init_shop();
 		$confirm = $shop->confirm( $get['TID'], $args );
-		error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
+		if ( self::DEBUG ) error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
 
 		return true;
 	}
@@ -281,7 +281,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	}
 
 	public function maybe_capture_payment( Group_Buying_Payment $payment ) {
-		error_log( 'payment' . print_r( $payment, TRUE ) );
+
 		if ( $payment->get_payment_method() == $this->get_payment_method() && $payment->get_status() != Group_Buying_Payment::STATUS_COMPLETE ) {
 			$data = $payment->get_data();
 
@@ -327,7 +327,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 	public function get_transaction_status( $tid ) {
 		$shop = self::init_shop();
 		$transaction = $shop->updateTransactionStatus( $tid );
-		error_log( 'get_transaction_status transaction' . print_r( $transaction, TRUE ) );
+		if ( self::DEBUG ) error_log( 'get_transaction_status transaction' . print_r( $transaction, TRUE ) );
 		return $transaction->params['TSTATUS'];
 	}
 
