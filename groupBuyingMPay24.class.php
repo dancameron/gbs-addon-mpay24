@@ -119,22 +119,22 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		}
 
 		$transaction_id = Group_Buying_Record::new_record( null, self::TRANSACTION_TYPE, 'mPay24 Transaction', get_current_user_id() );
-		self::set_token( $transaction_id ); // Set the preapproval key
+		self::set_token( $transaction_id ); // Set the transaction id
 		if ( self::DEBUG ) error_log( 'record id' . print_r( $transaction_id, TRUE ) );
 
 
 		$shop = self::init_shop();
 		$shop->setTid( $transaction_id );
 		$shop->setPrice( gb_get_number_format( $filtered_total ) );
-		$shop->setLanguage( $this->lang );
+		$shop->setLanguage( self::$lang );
 		$customer_name = $checkout->cache['billing']['first_name'].' '.$checkout->cache['billing']['last_name'];
 		$shop->setCustomer( $customer_name );
 		$shop->setCustomerId( get_current_user_id() );
 
-		$shop->setSuccessUrl( $this->return_url ); // thank you page
-		$shop->setErrorUrl ( $this->return_url );
-		$shop->setCancelUrl( $this->cancel_url );
-		$shop->setConfirmUrl( $this->return_url );
+		$shop->setSuccessUrl( self::$return_url ); // thank you page
+		$shop->setErrorUrl( self::$return_url );
+		$shop->setCancelUrl( self::$cancel_url );
+		$shop->setConfirmUrl( self::$return_url );
 
 		$result = $shop->pay();
 		if ( self::DEBUG ) error_log( 'result' . print_r( $result, TRUE ) );
@@ -151,6 +151,11 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		exit();
 	}
 
+	/**
+	 * Back from mPay24
+	 * exaple: http://prime.gbmu.dev/checkout/?TID=3942&LANGUAGE=DE&USER_FIELD=&BRAND=VISA
+	 * @return
+	 */
 	public function back_from_mpay24() {
 		if ( self::returned_from_offsite() ) {
 			// Process the order
@@ -177,14 +182,19 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 		if ( self::DEBUG ) {
 			error_log( '---------- mPay24 GET ----------' );
-			error_log( "message: " . print_r( wp_parse_args( $get ), true ) );
+			error_log( "message: " . print_r( $get, true ) );
 		}
 
 		$shop = self::init_shop();
 		$confirm = $shop->confirm( $get['TID'], $args );
-		if ( self::DEBUG ) error_log( 'confirm payment ' . print_r( $confirm, TRUE ) );
-
-		return true;
+		$status = self::get_transaction_status( $get['TID'], FALSE );
+		if ( $status->getGeneralResponse()->getStatus() != "OK" ) {
+			if ( self::DEBUG ) error_log( "Error: " . $status->getExternalStatus() );
+			if ( self::DEBUG ) error_log( "Return Code: " . $status->getGeneralResponse()->getReturnCode() );
+			self::set_message( $status->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
+			return FALSE;
+		}
+		return $status;
 	}
 
 	/**
@@ -227,7 +237,8 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		}
 
 		// Transaction id
-		$response['transaction_id'] = self::get_token();
+		$transaction_id = ( isset( $_GET['TID'] ) && $_GET['TID'] != '' ) ? $_GET['TID'] : self::get_token() ;
+		self::unset_token();
 
 		// create new payment
 		$payment_id = Group_Buying_Payment::new_payment( array(
@@ -287,36 +298,47 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 			if ( isset( $data['tid'] ) && $data['tid'] ) { // transaction id required.
 
-				$status = $this->get_transaction_status( $data['tid'] );
-				// mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
-				switch ( $status ) {
-				case 'BILLED':
-					// Payment completed
-					$items_captured = array(); // Creating simple array of items that are captured
-					foreach ( $payment->get_deals() as $item ) {
-						$items_captured[] = $item['deal_id'];
-					}
-					do_action( 'payment_captured', $payment, array_keys( $items_to_capture )  );
-					$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
-					do_action( 'payment_complete', $payment );
-					break;
-				case 'RESERVED':
-					// Order pending
-					// default is pending, nothing to do.
-					break;
-				case 'ERROR':
-				case 'SUSPENDED':
-					// Order failed
-				case 'CREDITED':
-					// Refunded
-				case 'REVERSED':
-					// Order cancelled
-					$payment->set_status( Group_Buying_Payment::STATUS_VOID );
-					break;
+				$items_to_capture = $this->items_to_capture( $payment );
 
-				default:
-					// No action
-					break;
+				if ( $items_to_capture ) {
+					$status = self::get_transaction_status( $data['tid'], FALSE );
+
+					// mpay24 transaction status: BILLED,RESERVED,ERROR,SUSPENDED,CREDITED,REVERSED
+					switch ( $status->params['TSTATUS'] ) {
+					case 'BILLED':
+						// Change payment data
+						foreach ( $items_to_capture as $deal_id => $amount ) {
+							unset( $data['uncaptured_deals'][$deal_id] );
+						}
+						if ( !isset( $data['capture_response'] ) ) {
+							$data['capture_response'] = array();
+						}
+						$data['capture_response'][] = $status;
+						$payment->set_data( $data );
+
+						// Payment completed
+						do_action( 'payment_captured', $payment, array_keys( $items_to_capture )  );
+						$payment->set_status( Group_Buying_Payment::STATUS_COMPLETE );
+						do_action( 'payment_complete', $payment );
+						break;
+					case 'RESERVED':
+						// Order pending
+						// default is pending, nothing to do.
+						break;
+					case 'ERROR':
+					case 'SUSPENDED':
+						// Order failed
+					case 'CREDITED':
+						// Refunded
+					case 'REVERSED':
+						// Order cancelled
+						$payment->set_status( Group_Buying_Payment::STATUS_VOID );
+						break;
+
+					default:
+						// No action
+						break;
+					}
 				}
 			}
 
@@ -324,11 +346,14 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 
 	}
 
-	public function get_transaction_status( $tid ) {
+	public static function get_transaction_status( $tid, $tstatus_only = TRUE ) {
 		$shop = self::init_shop();
 		$transaction = $shop->updateTransactionStatus( $tid );
 		if ( self::DEBUG ) error_log( 'get_transaction_status transaction' . print_r( $transaction, TRUE ) );
-		return $transaction->params['TSTATUS'];
+		if ( $tstatus ) {
+			return $transaction->params['TSTATUS'];
+		}
+		return $transaction;
 	}
 
 	public static function set_token( $token ) {
