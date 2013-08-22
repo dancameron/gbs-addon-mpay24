@@ -188,7 +188,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 		$shop = self::init_shop();
 		$confirm = $shop->confirm( $get['TID'], $args );
 		$status = self::get_transaction_status( $get['TID'], FALSE );
-		if ( $status->getGeneralResponse()->getStatus() != "OK" ) {
+		if ( $status->getGeneralResponse()->getStatus() != "OK" || $status->params['TSTATUS'] == 'ERROR' || $status->params['TSTATUS'] == 'SUSPENDED' ) {
 			if ( self::DEBUG ) error_log( "Error: " . $status->getExternalStatus() );
 			if ( self::DEBUG ) error_log( "Return Code: " . $status->getGeneralResponse()->getReturnCode() );
 			self::set_message( $status->getExternalStatus(), self::MESSAGE_STATUS_ERROR );
