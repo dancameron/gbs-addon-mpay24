@@ -118,7 +118,7 @@ class Group_Buying_MPay24 extends Group_Buying_Offsite_Processors {
 			return array();
 		}
 
-		$transaction_id = Group_Buying_Record::new_record( null, self::TRANSACTION_TYPE, 'mPay24 Transaction', get_current_user_id() );
+		$transaction_id = Group_Buying_Records::new_record( null, self::TRANSACTION_TYPE, 'mPay24 Transaction', get_current_user_id() );
 		self::set_token( $transaction_id ); // Set the transaction id
 		if ( self::DEBUG ) error_log( 'record id' . print_r( $transaction_id, TRUE ) );
 
